@@ -13,12 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin mixkit-cartoon-toy-whistle-616.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:mixkit-cartoon-toy-whistle-616.wav
-
 #begin tribble_coo.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
