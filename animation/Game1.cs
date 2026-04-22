@@ -13,13 +13,16 @@ namespace animation
 
         Texture2D tribbleBTexture, tribbleCTexture, tribbleGTexture, tribbleOTexture;
 
-        Rectangle window, tribbleBRect, tribbleCRect, tribbleGRect;
+        Rectangle window, tribbleBRect, tribbleCRect, tribbleGRect, tribbleORect;
 
-        Vector2 tribbleBSpeed, tribbleCSpeed, tribbleGSpeed;
+        Vector2 tribbleBSpeed, tribbleCSpeed, tribbleGSpeed, tribbleOSpeed;
 
         SoundEffect tribbleSound;
 
-        Random random;
+        Random random = new Random();
+
+
+        Color backgroundColour = Color.SeaGreen;
         
 
         public Game1()
@@ -36,13 +39,16 @@ namespace animation
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.ApplyChanges();
 
-            tribbleBRect = new Rectangle(0, 0, 100, 100);
-            tribbleBSpeed = new Vector2(6, 8);
-            tribbleCRect = new Rectangle(5,0, 100, 100);
-            tribbleCSpeed = new Vector2(4, 1);
-            tribbleGRect = new Rectangle(0, 0, 100, 100);
-            tribbleGSpeed = new Vector2(4, 1);
+            random = new Random();
 
+            tribbleBRect = new Rectangle(random.Next(0, 700), random.Next(0, 500), 100, 100);
+            tribbleBSpeed = new Vector2(6, 8);
+            tribbleCRect = new Rectangle(random.Next(0, 700), random.Next(0, 500), 100, 100);
+            tribbleCSpeed = new Vector2(4, 0);
+            tribbleGRect = new Rectangle(random.Next(0, 700), random.Next(0,500), 100, 100);
+            tribbleGSpeed = new Vector2(0, 4);
+            tribbleORect = new Rectangle(random.Next(0, 700), random.Next(0, 500), 100, 100);
+            tribbleOSpeed = new Vector2(0, 4);
 
 
             // TODO: Add your initialization logic here
@@ -57,6 +63,7 @@ namespace animation
             tribbleBTexture = Content.Load<Texture2D>("tribbleBrown");
             tribbleCTexture = Content.Load<Texture2D>("tribbleCream");
             tribbleGTexture = Content.Load<Texture2D>("tribbleGrey");
+            tribbleOTexture = Content.Load<Texture2D>("tribbleOrange");
             tribbleSound = Content.Load<SoundEffect>("tribble_coo");
             
             // TODO: use this.Content to load your game content here
@@ -67,9 +74,12 @@ namespace animation
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
-            random = new Random();
+           
+           
 
             // TODO: Add your update logic here
+           
+           // tribble brown
             tribbleBRect.X += (int)tribbleBSpeed.X;
             if (tribbleBRect.Right > window.Width || tribbleBRect.Left <= 0)
             {
@@ -77,9 +87,6 @@ namespace animation
                 tribbleSound.Play();
                
             }
-
-
-
             tribbleBRect.Y += (int)tribbleBSpeed.Y;
             if (tribbleBRect.Top <= 0 || tribbleBRect.Bottom > window.Height)
             {
@@ -88,48 +95,48 @@ namespace animation
 
             }
 
+            // tribble cream
+
             tribbleCRect.X += (int)tribbleCSpeed.X;
-            if (tribbleCRect.Right > window.Width || tribbleCRect.Left <= 0)
+            if (tribbleCRect.Left > window.Width || tribbleCRect.Right <= 0)
             {
+                
                 tribbleCRect.X = random.Next(0,700);
+                tribbleCRect.Y = random.Next(0, 500);
+                tribbleCSpeed.X *= -1;
             }
 
-            tribbleCRect.Y += (int)tribbleCSpeed.Y;
-            if (tribbleCRect.Bottom > window.Height || tribbleCRect.Top <= 0)
-            {
-                tribbleCRect.Y = random.Next(0,500);
-            }
-
-
-
-            tribbleGRect.X += (int)tribbleGSpeed.X;
-            if (tribbleGRect.Right > window.Width || tribbleGRect.Left <= 0)
-            {
-                tribbleGSpeed.X = 1;
-                tribbleGSpeed.X *= random.Next(-10, -1);
-            }
-
+            // tribble grey
             tribbleGRect.Y += (int)tribbleGSpeed.Y;
             if (tribbleGRect.Bottom > window.Height || tribbleGRect.Top <= 0)
             {
-                tribbleGSpeed.X = 1;
-                tribbleGSpeed.Y *= random.Next(-10, -1);
+                tribbleGSpeed.Y *= -1;
+
+                backgroundColour = new Color(
+                    random.Next(256),
+                    random.Next(256),
+                    random.Next(256)
+                    );
+
             }
 
-           
+            tribbleORect.Y += (int)tribbleOSpeed.Y;
+
+
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(backgroundColour);
 
             _spriteBatch.Begin();
 
             _spriteBatch.Draw(tribbleBTexture, tribbleBRect, Color.White);
             _spriteBatch.Draw(tribbleCTexture, tribbleCRect, Color.White);
             _spriteBatch.Draw(tribbleGTexture, tribbleGRect, Color.White);
+            _spriteBatch.Draw(tribbleOTexture, tribbleORect, Color.White);
 
             _spriteBatch.End();
             // TODO: Add your drawing code here
