@@ -48,7 +48,7 @@ namespace animation
             tribbleGRect = new Rectangle(random.Next(0, 700), random.Next(0,500), 100, 100);
             tribbleGSpeed = new Vector2(0, 4);
             tribbleORect = new Rectangle(random.Next(0, 700), random.Next(0, 500), 100, 100);
-            tribbleOSpeed = new Vector2(0, 4);
+            tribbleOSpeed = new Vector2(2,6);
 
 
             // TODO: Add your initialization logic here
@@ -120,11 +120,23 @@ namespace animation
 
             }
 
+            // tribble orange
             tribbleORect.Y += (int)tribbleOSpeed.Y;
+            if (tribbleORect.Top <= 0 || tribbleORect.Bottom > window.Height)
+            {
+                tribbleOSpeed.Y *= -1;
+                tribbleORect.Height = random.Next(0, 200);
+            }
+              
+                tribbleORect.X += (int)tribbleOSpeed.X;
+            if (tribbleORect.Right > window.Width || tribbleORect.Left <= 0)
+            {
+                tribbleOSpeed.X *= -1;
+                tribbleORect.Width = random.Next(0, 200);
+            }
 
 
-
-            base.Update(gameTime);
+                base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
