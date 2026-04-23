@@ -125,14 +125,14 @@ namespace animation
             if (tribbleORect.Top <= 0 || tribbleORect.Bottom > window.Height)
             {
                 tribbleOSpeed.Y *= -1;
-                tribbleORect.Height = random.Next(0, 200);
+                tribbleORect.Height = random.Next(20, 200);
             }
               
                 tribbleORect.X += (int)tribbleOSpeed.X;
             if (tribbleORect.Right > window.Width || tribbleORect.Left <= 0)
             {
                 tribbleOSpeed.X *= -1;
-                tribbleORect.Width = random.Next(0, 200);
+                tribbleORect.Width = random.Next(20, 200);
             }
 
 
